@@ -1,0 +1,152 @@
+﻿@{ ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MyLayout1.cshtml"; }
+@if (Session["TicketCanceled"] != null && (bool)Session["TicketCanceled"] == true)
+{
+    <script>
+        window.alert("Ticket is canceled successfully");
+    </script>
+    Session["TicketCanceled"] = null;
+}
+<div class="wrap-login100">
+    <form class="login100-form validate-form" action="/Home/Search">
+        <span class="login100-form-logo">
+            <i class="zmdi zmdi-bus"></i>
+        </span>
+
+        <span class="login100-form-title p-b-34 p-t-27">
+            Egypt Trains
+        </span>
+
+        <!--<div class="wrap-input100 validate-input" data-validate="Enter Train">
+            <input class="input100" type="text" name="username" placeholder="Train">
+
+        </div>
+
+        <div class="wrap-input100 validate-input" data-validate="Enter Car">
+            <input class="input100" type="text" name="pass" placeholder="Car">
+
+        </div>-->
+        <!-- <div class="wrap-input100 validate-input" data-validate="Enter Seat">
+            <input class="input100" type="text" name="pass" placeholder="Seat">
+
+        </div>-->
+        <div class="container-login100-form-btn" style="margin-bottom:30px">
+            <button class="login100-form-btn">
+                Reserve a Ticket
+            </button>
+        </div>
+    </form>
+    <form class="login100-form validate-form" action="/Home/Cancelation">
+
+        <div class="container-login100-form-btn">
+            <button class="login100-form-btn">
+                Cancel Reservation
+            </button>
+        </div>
+    </form>
+</div>
+
+
+
+<section id="most-visited">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="section-heading">
+                    <h2>Train Types Overview</h2>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div id="owl-mostvisited" class="owl-carousel owl-theme">
+                    <div class="item col-md-12">
+                        <div class="visited-item">
+                            <img src="~/Content/img3/sleep1.jpg " height="170px" alt="">
+                            <div class="text-content">
+                                <h4>Sleep</h4>
+                                <span>First class</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item col-md-12">
+                        <div class="visited-item">
+                            <img src="~/Content/img3/Sleep2.jpg" height="170px" alt="">
+                            <div class="text-content">
+                                <h4>Sleep</h4>
+                                <span>Second class</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item col-md-12">
+                        <div class="visited-item">
+                            <img src="~/Content/img3/vip1.jpg" height="170px" alt="">
+                            <div class="text-content">
+                                <h4>VIP</h4>
+                                <span>First class</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item col-md-12">
+                        <div class="visited-item">
+                            <img src="~/Content/img3/vip2.jpg" height="170px" alt="">
+                            <div class="text-content">
+                                <h4>VIP</h4>
+                                <span>Second class</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item col-md-12">
+                        <div class="visited-item">
+                            <img src="~/Content/img3/AC1.jpg" height="170px" alt="">
+                            <div class="text-content">
+                                <h4>AC</h4>
+                                <span>First class</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item col-md-12">
+                        <div class="visited-item">
+                            <img src="~/Content/img3/AC2.jpg" height="170px" alt="">
+                            <div class="text-content">
+                                <h4>AC</h4>
+                                <span>Second class</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="primary-button">
+                    <a href="#" class="scroll-top">Back To Top</a>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <ul class="social-icons">
+                    <li><a href="https://www.facebook.com/egyptian.railways.enr/"><i class="zmdi zmdi-facebook"></i></a></li>
+                    <li><a href="https://twitter.com/egyrailways?lang=ar"><i class="zmdi zmdi-twitter"></i></a></li>
+                    <li><a href="https://eg.linkedin.com/company/train-egypt"><i class="zmdi zmdi-linkedin"></i></a></li>
+                    <!-- <li><a href="#"><i class="fa fa-rss"></i></a></li>
+                    <li><a href="#"><i class="fa fa-behance"></i></a></li>
+                        -->
+                </ul>
+            </div>
+            <!--
+            <div class="col-md-12">
+                <p>
+                    Copyright &copy; 2018 Flight Tour and Travel Company
+
+                    | Design: <a href="http://www.code-projects.org" target="_parent"><em>Code Projects</em></a>
+                </p>
+            </div>
+                -->
+        </div>
+    </div>
+</footer>

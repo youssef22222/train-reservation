@@ -1,0 +1,45 @@
+﻿@using Train.ModelView
+@{
+    ViewBag.Title = "SearchResults";
+    Layout = "~/Views/Shared/_MyLayout1.cshtml";
+}
+@model List<ValidTrainDetailsModelView>
+  
+        <div class="container-table100" style="margin-right: 10px; background-image: url('.. /../Content/images/1.jpg' ">
+            <div class="wrap-table100">
+                <div class="table100">
+                    <table>
+                        <thead>
+                            <tr class="table100-head">
+                                <th class="column1">Train</th>
+                                <th class="column2">@ViewBag.start<!--from form--></th>
+                                <th class="column3">@ViewBag.end<!--from form--></th>
+                                <th class="column4">Class</th>
+                                <th class="column5">Price</th>
+                                <th class="column6">Details<!--link--></th>
+                                <th class="column7">Reserve<!--link--></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach(var train in Model)
+                            {
+                            <tr>
+                                <td class="column1">train @train.TrainID</td>
+                                <td class="column2">@train.StartTime</td>
+                                <td class="column3">@train.EndTime</td>
+                                <td class="column4">@train.Type</td>
+                                <td class="column5">@train.Price$</td>
+                                <!--train id needed-->
+                                <td class="column6"><a href="/Home/TrainDetails/@train.TrainID">Details</a></td>
+                                <!--train id needed-->
+                                <td class="column7"><a href="/Home/TicketReservation/@train.TrainID">Reserve</a></td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+   
+
+

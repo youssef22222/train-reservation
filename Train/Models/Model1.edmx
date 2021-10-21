@@ -1,0 +1,516 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Booking_TicketsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="cars">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="IDTrain" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Type" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IDTrain" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="City">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="valid" Type="binary" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Go">
+          <Key>
+            <PropertyRef Name="IDtrain" />
+            <PropertyRef Name="CityName" />
+          </Key>
+          <Property Name="IDtrain" Type="int" Nullable="false" />
+          <Property Name="CityName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Arrive_Time" Type="time" Precision="7" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Seats">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="IDCar" />
+            <PropertyRef Name="IDTrain" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Valid" Type="binary" MaxLength="50" Nullable="false" />
+          <Property Name="IDCar" Type="int" Nullable="false" />
+          <Property Name="IDTrain" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Tickets">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="StartDestination" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="EndDestination" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Price" Type="float" Nullable="false" />
+          <Property Name="IDPassenger" Type="int" Nullable="false" />
+          <Property Name="SeatID" Type="int" Nullable="false" />
+          <Property Name="IDTrain" Type="int" Nullable="false" />
+          <Property Name="IDCar" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Train">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Type" Type="varchar(max)" Nullable="false" />
+          <Property Name="StartTime" Type="time" Precision="7" Nullable="false" />
+          <Property Name="EndTime" Type="time" Precision="7" Nullable="false" />
+          <Property Name="StartDestination" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="EndDestination" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="book">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="Tickets" Type="Self.Tickets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tickets">
+              <PropertyRef Name="IDPassenger" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="contain">
+          <End Role="Train" Type="Self.Train" Multiplicity="1" />
+          <End Role="cars" Type="Self.cars" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Train">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="cars">
+              <PropertyRef Name="IDTrain" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tickets_Seats">
+          <End Role="Seats" Type="Self.Seats" Multiplicity="1" />
+          <End Role="Tickets" Type="Self.Tickets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seats">
+              <PropertyRef Name="ID" />
+              <PropertyRef Name="IDCar" />
+              <PropertyRef Name="IDTrain" />
+            </Principal>
+            <Dependent Role="Tickets">
+              <PropertyRef Name="SeatID" />
+              <PropertyRef Name="IDCar" />
+              <PropertyRef Name="IDTrain" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ride">
+          <End Role="cars" Type="Self.cars" Multiplicity="1" />
+          <End Role="Seats" Type="Self.Seats" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cars">
+              <PropertyRef Name="ID" />
+              <PropertyRef Name="IDTrain" />
+            </Principal>
+            <Dependent Role="Seats">
+              <PropertyRef Name="IDCar" />
+              <PropertyRef Name="IDTrain" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="station">
+          <End Role="City" Type="Self.City" Multiplicity="1" />
+          <End Role="Go" Type="Self.Go" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="Name" />
+            </Principal>
+            <Dependent Role="Go">
+              <PropertyRef Name="CityName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="stop">
+          <End Role="Train" Type="Self.Train" Multiplicity="1" />
+          <End Role="Go" Type="Self.Go" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Train">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Go">
+              <PropertyRef Name="IDtrain" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Booking_TicketsModelStoreContainer">
+          <EntitySet Name="cars" EntityType="Self.cars" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Go" EntityType="Self.Go" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Seats" EntityType="Self.Seats" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tickets" EntityType="Self.Tickets" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Train" EntityType="Self.Train" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="book" Association="Self.book">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Tickets" EntitySet="Tickets" />
+          </AssociationSet>
+          <AssociationSet Name="contain" Association="Self.contain">
+            <End Role="Train" EntitySet="Train" />
+            <End Role="cars" EntitySet="cars" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tickets_Seats" Association="Self.FK_Tickets_Seats">
+            <End Role="Seats" EntitySet="Seats" />
+            <End Role="Tickets" EntitySet="Tickets" />
+          </AssociationSet>
+          <AssociationSet Name="ride" Association="Self.ride">
+            <End Role="cars" EntitySet="cars" />
+            <End Role="Seats" EntitySet="Seats" />
+          </AssociationSet>
+          <AssociationSet Name="station" Association="Self.station">
+            <End Role="City" EntitySet="City" />
+            <End Role="Go" EntitySet="Go" />
+          </AssociationSet>
+          <AssociationSet Name="stop" Association="Self.stop">
+            <End Role="Train" EntitySet="Train" />
+            <End Role="Go" EntitySet="Go" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Booking_TicketsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="car">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="IDTrain" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IDTrain" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Train" Relationship="Self.contain" FromRole="cars" ToRole="Train" />
+          <NavigationProperty Name="Seats" Relationship="Self.ride" FromRole="cars" ToRole="Seats" />
+        </EntityType>
+        <EntityType Name="City">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="valid" Type="Binary" MaxLength="50" FixedLength="true" Nullable="false" />
+          <NavigationProperty Name="Goes" Relationship="Self.station" FromRole="City" ToRole="Go" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Tickets" Relationship="Self.book" FromRole="Customer" ToRole="Tickets" />
+        </EntityType>
+        <EntityType Name="Go">
+          <Key>
+            <PropertyRef Name="IDtrain" />
+            <PropertyRef Name="CityName" />
+          </Key>
+          <Property Name="IDtrain" Type="Int32" Nullable="false" />
+          <Property Name="CityName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Arrive_Time" Type="Time" Nullable="false" Precision="7" />
+          <NavigationProperty Name="City" Relationship="Self.station" FromRole="Go" ToRole="City" />
+          <NavigationProperty Name="Train" Relationship="Self.stop" FromRole="Go" ToRole="Train" />
+        </EntityType>
+        <EntityType Name="Seat">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="IDCar" />
+            <PropertyRef Name="IDTrain" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Valid" Type="Binary" MaxLength="50" FixedLength="true" Nullable="false" />
+          <Property Name="IDCar" Type="Int32" Nullable="false" />
+          <Property Name="IDTrain" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="car" Relationship="Self.ride" FromRole="Seats" ToRole="cars" />
+          <NavigationProperty Name="Tickets" Relationship="Self.FK_Tickets_Seats" FromRole="Seats" ToRole="Tickets" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Ticket">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="StartDestination" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EndDestination" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Price" Type="Double" Nullable="false" />
+          <Property Name="IDPassenger" Type="Int32" Nullable="false" />
+          <Property Name="SeatID" Type="Int32" Nullable="false" />
+          <Property Name="IDTrain" Type="Int32" Nullable="false" />
+          <Property Name="IDCar" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="Self.book" FromRole="Tickets" ToRole="Customer" />
+          <NavigationProperty Name="Seat" Relationship="Self.FK_Tickets_Seats" FromRole="Tickets" ToRole="Seats" />
+        </EntityType>
+        <EntityType Name="Train">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="StartTime" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="EndTime" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="StartDestination" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EndDestination" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="cars" Relationship="Self.contain" FromRole="Train" ToRole="cars" />
+          <NavigationProperty Name="Goes" Relationship="Self.stop" FromRole="Train" ToRole="Go" />
+        </EntityType>
+        <Association Name="contain">
+          <End Role="Train" Type="Self.Train" Multiplicity="1" />
+          <End Role="cars" Type="Self.car" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Train">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="cars">
+              <PropertyRef Name="IDTrain" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ride">
+          <End Role="cars" Type="Self.car" Multiplicity="1" />
+          <End Role="Seats" Type="Self.Seat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cars">
+              <PropertyRef Name="ID" />
+              <PropertyRef Name="IDTrain" />
+            </Principal>
+            <Dependent Role="Seats">
+              <PropertyRef Name="IDCar" />
+              <PropertyRef Name="IDTrain" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="station">
+          <End Role="City" Type="Self.City" Multiplicity="1" />
+          <End Role="Go" Type="Self.Go" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="Name" />
+            </Principal>
+            <Dependent Role="Go">
+              <PropertyRef Name="CityName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="book">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="Tickets" Type="Self.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tickets">
+              <PropertyRef Name="IDPassenger" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="stop">
+          <End Role="Train" Type="Self.Train" Multiplicity="1" />
+          <End Role="Go" Type="Self.Go" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Train">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Go">
+              <PropertyRef Name="IDtrain" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tickets_Seats">
+          <End Role="Seats" Type="Self.Seat" Multiplicity="1" />
+          <End Role="Tickets" Type="Self.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seats">
+              <PropertyRef Name="ID" />
+              <PropertyRef Name="IDCar" />
+              <PropertyRef Name="IDTrain" />
+            </Principal>
+            <Dependent Role="Tickets">
+              <PropertyRef Name="SeatID" />
+              <PropertyRef Name="IDCar" />
+              <PropertyRef Name="IDTrain" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Booking_TicketsEntities5" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="cars" EntityType="Self.car" />
+          <EntitySet Name="Cities" EntityType="Self.City" />
+          <EntitySet Name="Customers" EntityType="Self.Customer" />
+          <EntitySet Name="Goes" EntityType="Self.Go" />
+          <EntitySet Name="Seats" EntityType="Self.Seat" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="Tickets" EntityType="Self.Ticket" />
+          <EntitySet Name="Trains" EntityType="Self.Train" />
+          <AssociationSet Name="contain" Association="Self.contain">
+            <End Role="Train" EntitySet="Trains" />
+            <End Role="cars" EntitySet="cars" />
+          </AssociationSet>
+          <AssociationSet Name="ride" Association="Self.ride">
+            <End Role="cars" EntitySet="cars" />
+            <End Role="Seats" EntitySet="Seats" />
+          </AssociationSet>
+          <AssociationSet Name="station" Association="Self.station">
+            <End Role="City" EntitySet="Cities" />
+            <End Role="Go" EntitySet="Goes" />
+          </AssociationSet>
+          <AssociationSet Name="book" Association="Self.book">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Tickets" EntitySet="Tickets" />
+          </AssociationSet>
+          <AssociationSet Name="stop" Association="Self.stop">
+            <End Role="Train" EntitySet="Trains" />
+            <End Role="Go" EntitySet="Goes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tickets_Seats" Association="Self.FK_Tickets_Seats">
+            <End Role="Seats" EntitySet="Seats" />
+            <End Role="Tickets" EntitySet="Tickets" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Booking_TicketsModelStoreContainer" CdmEntityContainer="Booking_TicketsEntities5">
+          <EntitySetMapping Name="cars">
+            <EntityTypeMapping TypeName="Booking_TicketsModel.car">
+              <MappingFragment StoreEntitySet="cars">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="IDTrain" ColumnName="IDTrain" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cities">
+            <EntityTypeMapping TypeName="Booking_TicketsModel.City">
+              <MappingFragment StoreEntitySet="City">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="valid" ColumnName="valid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="Booking_TicketsModel.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Goes">
+            <EntityTypeMapping TypeName="Booking_TicketsModel.Go">
+              <MappingFragment StoreEntitySet="Go">
+                <ScalarProperty Name="IDtrain" ColumnName="IDtrain" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="Arrive_Time" ColumnName="Arrive_Time" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Seats">
+            <EntityTypeMapping TypeName="Booking_TicketsModel.Seat">
+              <MappingFragment StoreEntitySet="Seats">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Valid" ColumnName="Valid" />
+                <ScalarProperty Name="IDCar" ColumnName="IDCar" />
+                <ScalarProperty Name="IDTrain" ColumnName="IDTrain" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="Booking_TicketsModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tickets">
+            <EntityTypeMapping TypeName="Booking_TicketsModel.Ticket">
+              <MappingFragment StoreEntitySet="Tickets">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="StartDestination" ColumnName="StartDestination" />
+                <ScalarProperty Name="EndDestination" ColumnName="EndDestination" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="IDPassenger" ColumnName="IDPassenger" />
+                <ScalarProperty Name="SeatID" ColumnName="SeatID" />
+                <ScalarProperty Name="IDTrain" ColumnName="IDTrain" />
+                <ScalarProperty Name="IDCar" ColumnName="IDCar" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Trains">
+            <EntityTypeMapping TypeName="Booking_TicketsModel.Train">
+              <MappingFragment StoreEntitySet="Train">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="StartDestination" ColumnName="StartDestination" />
+                <ScalarProperty Name="EndDestination" ColumnName="EndDestination" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

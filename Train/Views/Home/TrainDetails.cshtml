@@ -1,0 +1,33 @@
+﻿@using Train.Models
+@{
+    ViewBag.Title = "TrainDetails";
+    Layout = "~/Views/Shared/_MyLayout1.cshtml";
+}
+@model List<Go>
+
+    <div class="container-table100" style="margin-right:10px;background-image: url('.. /../Content/images/1.jpg');">
+        <div>Train @Model.First().IDtrain Details</div>
+        <div class="wrap-table100">
+            <div class="table100">
+                <table>
+                    <thead>
+                        <tr class="table100-head">
+                            <th class="column11">City</th>
+                            <th class="column22">Time<!--from form--></th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var goes in Model)
+                        {
+                            <tr>
+                                <td class="column11">@goes.CityName</td>
+                                <td class="column22">@goes.Arrive_Time</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+

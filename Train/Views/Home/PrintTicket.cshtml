@@ -1,0 +1,69 @@
+﻿@using Train.Models
+@{
+    ViewBag.Title = "PrintTicket";
+    Layout = "~/Views/Shared/_MyLayout1.cshtml";
+}
+@model List<Ticket>
+
+    @foreach (var ticket in Model)
+    {
+        <div class="wrap-login100" style=" margin: 0px 10px 120px 10px;background-color:aquamarine" >
+            <form class="login100-form validate-form">
+                <span class="login100-form-logo">
+                    <i class="zmdi zmdi-bus"></i>
+                </span>
+
+                <!-- <span class="login100-form-title p-b-34 p-t-27">
+    Reserve
+       </span>-->
+                <div class="wrap-input100 validate-input" data-validate="Enter Name" style="display:flex;justify-content:space-around">
+                    <label class="input100" type="text" name="username">Date : </label>
+                    <label class="input100" type="text" name="username">@ticket.Date.ToShortDateString()</label>
+                </div>
+                <div class="wrap-input100 validate-input" data-validate="Enter Name" style="display:flex;justify-content:space-around">
+                    <label class="input100" type="text" name="username">Ticket ID : </label>
+                    <label class="input100" type="text" name="username">@ticket.ID</label>
+                </div>
+                <div class="wrap-input100 validate-input" data-validate="Enter Name" style="display:flex;justify-content:space-around">
+                    <label class="input100" type="text" name="username">Train : </label>
+                    <label class="input100" type="text" name="username">@ticket.IDTrain</label>
+                </div>
+                <div class="wrap-input100 validate-input" data-validate="Enter Name" style="display:flex;justify-content:space-around">
+                    <label class="input100" type="text" name="username">Car : </label>
+                    <label class="input100" type="text" name="username">@ticket.IDCar</label>
+                </div>
+                <div class="wrap-input100 validate-input" data-validate="Enter Name" style="display:flex;justify-content:space-around">
+                    <label class="input100" type="text" name="username">Seat : </label>
+                    <label class="input100" type="text" name="username">@ticket.SeatID</label>
+                </div>
+                <div class="wrap-input100 validate-input" data-validate="Enter Name" style="display:flex;justify-content:space-around">
+                    <label class="input100" type="text" name="username">Name : </label>
+                    <label class="input100" type="text" name="username"> @Session["Name"]</label>
+                </div>
+
+                <div class="wrap-input100 validate-input" data-validate="Enter Name" style="display:flex;justify-content:space-around">
+                    <label class="input100" type="text" name="username">ID : </label>
+                    <label class="input100" type="text" name="username">@ticket.IDPassenger</label>
+                </div>
+                <div class="wrap-input100 validate-input" data-validate="Enter Name" style="display:flex;justify-content:space-around">
+                    <label class="input100" type="text" name="username">From : </label>
+                    <label class="input100" type="text" name="username"> @ticket.StartDestination</label>
+                </div>
+
+                <div class="wrap-input100 validate-input" data-validate="Enter Name" style="display:flex;justify-content:space-around">
+                    <label class="input100" type="text" name="username">To : </label>
+                    <label class="input100" type="text" name="username"> @ticket.EndDestination</label>
+                </div>
+                <div class="wrap-input100 validate-input" data-validate="Enter Name" style="display:flex;justify-content:space-around">
+                    <label class="input100" type="text" name="username">Price : </label>
+                    <label class="input100" type="text" name="username">@ticket.Price $</label>
+                </div>
+            </form>
+        </div>
+    }
+    <div class="container-login100-form-btn">
+        <button class="login100-form-btn" onclick="window.print(); return false;">
+            Print
+        </button>
+    </div>
+

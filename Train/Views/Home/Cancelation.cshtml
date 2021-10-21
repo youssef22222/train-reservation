@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewBag.Title = "Cancelation";
+    Layout = "~/Views/Shared/_MyLayout1.cshtml";
+}
+@if(Session["TicketCanceled"]!= null&& (bool)Session["TicketCanceled"]==false)
+{
+    <script>
+        window.alert("Ticket is not Exist");
+    </script>
+    Session["TicketCanceled"] = null;
+}
+<div class="wrap-login100">
+    <form class="login100-form validate-form"action="/Home/Delete">
+        <span class="login100-form-logo">
+            <i class="zmdi zmdi-bus"></i>
+        </span>
+
+        <span class="login100-form-title p-b-34 p-t-27">
+            Cancel Reservation
+        </span>
+
+        <!--<div class="wrap-input100 validate-input" data-validate="Enter Train">
+        <input class="input100" type="text" name="username" placeholder="Train">
+
+    </div>
+
+    <div class="wrap-input100 validate-input" data-validate="Enter Car">
+        <input class="input100" type="text" name="pass" placeholder="Car">
+
+    </div>-->
+        <div class="wrap-input100 validate-input" data-validate="Enter Ticket ID">
+            <input class="input100" type="text" name="ticketId" placeholder="Ticket ID">
+
+        </div>
+
+        <div class="container-login100-form-btn">
+            <button class="login100-form-btn">
+                Cancel Reservation
+            </button>
+        </div>
+
+
+    </form>
+</div>
+

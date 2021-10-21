@@ -1,0 +1,114 @@
+﻿@using Train.Models;
+@{
+ViewBag.Title = "Search";
+Layout = "~/Views/Shared/_MyLayout1.cshtml";
+}
+<div class="wrap-login100">
+    <form class="login100-form validate-form" action="/Home/SearchResults"method="post">
+        <span class="login100-form-logo">
+            <i class="zmdi zmdi-bus"></i>
+        </span>
+
+        <span class="login100-form-title p-b-34 p-t-27">
+            Search
+        </span>
+
+
+        <div class="wrap-input100 validate-input" data-validate="Pickup station">
+            <select class="input100" type="text" name="start" placeholder="Pickup station" data-validate="Pickup station" required>
+                <option value="" disabled selected hidden>Pickup Station</option>
+                @foreach (var Station in HelpData.CityName)
+                {
+                    <option>@Station</option>
+                }
+            </select>
+            <!-- <span class="focus-input100" data-placeholder="&#xf207;"></span>-->
+        </div>
+
+        <div class="wrap-input100 validate-input" data-validate="Destination station">
+            <select class="input100" type="password" name="end" placeholder="Destination station" required>
+                <option value="" disabled selected hidden>Destination Station</option>
+                @foreach (var Station in HelpData.CityName)
+                {
+                 <option>@Station</option>
+                }
+            </select>
+            <!--   <span class="focus-input100" data-placeholder="&#xf191;"></span>-->
+        </div>
+        <div class="wrap-input100 validate-input" data-validate="Travel date">
+            <input class="input100" type="date" name="date" placeholder="Travel date">
+
+
+            <!--   <span class="focus-input100" data-placeholder="&#xf191;"></span>-->
+        </div>
+
+        <div class="contact100-form-checkbox" style="display:flex;justify-content:space-around">
+            <label>
+                Train type
+            </label>
+            <input class="input-checkbox100" id="ckb1" type="radio" name="Train_Class" value="VIP">
+            <label class="label-checkbox100" for="ckb1">
+                VIP
+            </label>
+            <input class="input-checkbox100" id="ckb2" type="radio" name="Train_Class" value="AC">
+            <label class="label-checkbox100" for="ckb2">
+                AC
+            </label>
+            <input class="input-checkbox100" id="ckb3" type="radio" name="Train_Class" value="Sleep">
+            <label class="label-checkbox100" for="ckb3">
+                Sleep
+            </label>
+            <input class="input-checkbox100" id="ckb4" type="radio" name="Train_Class" checked value="Any">
+            <label class="label-checkbox100" for="ckb4">
+                Any
+            </label>
+        </div>
+        <div class="contact100-form-checkbox" style="display:flex;justify-content:space-around">
+            <label>
+                Car type
+            </label>
+            <input class="input-checkbox100" id="ckb11" type="radio" name="Car_Class" checked value="First_Class">
+            <label class="label-checkbox100" for="ckb11">
+                First Class
+            </label>
+            <input class="input-checkbox100" id="ckb22" type="radio" name="Car_Class" value="Second_Class">
+            <label class="label-checkbox100" for="ckb22">
+                Second Class
+            </label>
+        </div>
+
+        <div class="contact100-form-checkbox" style="display:flex;justify-content:space-around">
+            <label>
+                Number of passengers
+            </label>
+            <input class="input-checkbox100" id="ckbb1" type="radio" name="NoOfPass" checked value="1">
+            <label class="label-checkbox100" for="ckbb1">
+                1
+            </label>
+            <input class="input-checkbox100" id="ckbb2" type="radio" name="NoOfPass" value="2">
+            <label class="label-checkbox100" for="ckbb2">
+                2
+            </label>
+            <input class="input-checkbox100" id="ckbb3" type="radio" name="NoOfPass" value="3">
+            <label class="label-checkbox100" for="ckbb3">
+                3
+            </label>
+            <input class="input-checkbox100" id="ckbb4" type="radio" name="NoOfPass"value="4">
+            <label class="label-checkbox100" for="ckbb4">
+                4
+            </label>
+        </div>
+        <div class="container-login100-form-btn">
+            <button class="login100-form-btn">
+                Search
+            </button>
+        </div>
+
+        <!-- <div class="text-center p-t-90">
+         <a class="txt1" href="#">
+             Forgot Password?
+         </a>
+        </div>-->
+    </form>
+</div>
+
